@@ -2,10 +2,6 @@ package com.texflow.backend.model;
 
 import jakarta.persistence.Embeddable;
 
-/**
- * Um item de uma grade de pedido/fabricacao. Ex: "Tamanho P" - 10 pecas.
- * Sem identidade propria - sempre vive dentro da lista de uma Operacao.
- */
 @Embeddable
 public class ItemGrade {
 

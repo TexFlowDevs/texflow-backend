@@ -16,11 +16,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
-/**
- * Uma Operacao (OP) define todo o processo produtivo de um pedido: qual
- * referencia (modelagem), pra qual cliente, com que grade pedida e
- * fabricada, e as etapas (ProcessoProdutivo) que ela passa.
- */
 @Entity
 public class Operacao {
 

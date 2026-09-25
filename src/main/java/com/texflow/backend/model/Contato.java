@@ -2,10 +2,6 @@ package com.texflow.backend.model;
 
 import jakarta.persistence.Embeddable;
 
-/**
- * Sem identidade propria (sem id) - sempre vive dentro de outra entidade,
- * por isso e' @Embeddable em vez de @Entity.
- */
 @Embeddable
 public class Contato {
 

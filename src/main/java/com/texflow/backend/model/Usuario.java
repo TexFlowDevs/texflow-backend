@@ -1,5 +1,6 @@
 package com.texflow.backend.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,7 +16,11 @@ public class Usuario {
     private Long id;
 
     private String nome;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String senha;
 
     @Enumerated(EnumType.STRING)
