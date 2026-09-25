@@ -11,10 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-/**
- * Uma das etapas necessarias pra confeccao de uma peca de roupa, dentro de
- * uma Operacao (ex: corte, costura, estamparia...).
- */
 @Entity
 public class ProcessoProdutivo {
 

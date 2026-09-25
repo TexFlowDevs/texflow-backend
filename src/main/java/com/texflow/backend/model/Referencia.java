@@ -5,10 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-/**
- * "Referencia" e' o termo usado pra designar uma modelagem de roupa.
- * O app nao guarda nenhuma outra informacao sobre ela, so' o nome.
- */
 @Entity
 public class Referencia {
 

@@ -22,38 +22,32 @@
     </properties>
 
     <dependencies>
-        <!-- Cria os endpoints REST que o app Flutter vai chamar -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Fala com o banco usando classes Java (entidades) em vez de SQL na mao -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- Driver que conversa com o Postgres -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Valida campos das entidades/DTOs com anotacoes (@NotBlank, @NotNull, etc.) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- BCryptPasswordEncoder - faz o hash da senha (nunca salva em texto puro) -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
 
-        <!-- Reinicia o servidor sozinho quando um arquivo e salvo - agiliza o desenvolvimento -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
