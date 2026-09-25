@@ -2,6 +2,8 @@
 
 Backend do TexFlow (gestão de processos produtivos para empresas têxteis), feito em **Spring Boot** + **PostgreSQL**.
 
+⚠️ Tudo abaixo (Java, Maven, senha do banco) só é necessário pra quem for **desenvolver o backend**. Quem só quer rodar/testar o app Flutter não precisa de nada disso - o app já aponta direto pro backend publicado no Render.
+
 ## Arquitetura
 
 - O banco de dados é **compartilhado** com o projeto BriqueApp: mesma instância Postgres no Render, banco `brique_app`.
