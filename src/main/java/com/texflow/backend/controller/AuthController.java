@@ -1,5 +1,8 @@
 package com.texflow.backend.controller;
 
+import java.security.SecureRandom;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.texflow.backend.dto.CadastroRequest;
+import com.texflow.backend.dto.EsqueciSenhaRequest;
 import com.texflow.backend.dto.LoginRequest;
 import com.texflow.backend.dto.UsuarioResponse;
-import com.texflow.backend.model.UserType;
 import com.texflow.backend.model.Usuario;
 import com.texflow.backend.repository.UsuarioRepository;
+import com.texflow.backend.service.EmailService;
 
 import jakarta.validation.Valid;
 
@@ -21,27 +24,18 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/auth")
 public class AuthController {
 
+    private static final String CARACTERES_SENHA = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+    private static final SecureRandom RANDOM = new SecureRandom();
+
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
-    public AuthController(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public AuthController(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
+            EmailService emailService) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @PostMapping("/cadastro")
-    public UsuarioResponse cadastro(@Valid @RequestBody CadastroRequest request) {
-        if (usuarioRepository.existsByEmail(request.getEmail())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ja existe um usuario com esse e-mail");
-        }
-
-        Usuario usuario = new Usuario();
-        usuario.setNome(request.getNome());
-        usuario.setEmail(request.getEmail());
-        usuario.setSenha(passwordEncoder.encode(request.getSenha()));
-        usuario.setTipo(UserType.OPERADOR);
-
-        return new UsuarioResponse(usuarioRepository.save(usuario));
+        this.emailService = emailService;
     }
 
     @PostMapping("/login")
@@ -54,5 +48,25 @@ public class AuthController {
         }
 
         return new UsuarioResponse(usuario);
+    }
+
+    @PostMapping("/esqueci-senha")
+    public Map<String, String> esqueciSenha(@Valid @RequestBody EsqueciSenhaRequest request) {
+        usuarioRepository.findByEmail(request.getEmail()).ifPresent(usuario -> {
+            String senhaNova = gerarSenhaAleatoria();
+            usuario.setSenha(passwordEncoder.encode(senhaNova));
+            usuarioRepository.save(usuario);
+            emailService.enviarSenhaNova(usuario.getEmail(), usuario.getNome(), senhaNova);
+        });
+
+        return Map.of("mensagem", "Se existir uma conta com esse e-mail, enviamos uma nova senha pra ele");
+    }
+
+    private String gerarSenhaAleatoria() {
+        StringBuilder senha = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            senha.append(CARACTERES_SENHA.charAt(RANDOM.nextInt(CARACTERES_SENHA.length())));
+        }
+        return senha.toString();
     }
 }
