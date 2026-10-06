@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -41,7 +42,7 @@ public class Operacao {
     @CollectionTable(name = "operacao_grade_fabricada", joinColumns = @JoinColumn(name = "operacao_id"))
     private List<ItemGrade> gradeFabricada = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "operacao_id")
     private List<ProcessoProdutivo> processos = new ArrayList<>();
 
