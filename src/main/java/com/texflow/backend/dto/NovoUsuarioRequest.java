@@ -1,10 +1,13 @@
 package com.texflow.backend.dto;
 
+import com.texflow.backend.model.UserType;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class CadastroRequest {
+public class NovoUsuarioRequest {
 
     @NotBlank
     private String nome;
@@ -16,6 +19,9 @@ public class CadastroRequest {
     @NotBlank
     @Size(min = 6, message = "A senha precisa ter pelo menos 6 caracteres")
     private String senha;
+
+    @NotNull
+    private UserType tipo;
 
     public String getNome() {
         return nome;
@@ -39,5 +45,13 @@ public class CadastroRequest {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public UserType getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(UserType tipo) {
+        this.tipo = tipo;
     }
 }
